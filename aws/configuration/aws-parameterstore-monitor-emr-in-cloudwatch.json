@@ -1,0 +1,190 @@
+{
+    "agent": {
+     "metrics_collection_interval": 30,
+     "logfile": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log",
+     "debug": false
+    },
+    "metrics": {
+      "namespace": "Dev/SuperFeedMetrics",
+      "metrics_collected": {
+        "collectd": {
+          "name_prefix":"SuperFeed_collectd_metrics",
+          "metrics_aggregation_interval":120
+        },
+        "cpu": {
+          "resources": [
+            "*"
+          ],
+          "measurement": [
+            {"name": "cpu_usage_idle", "rename": "CPU_USAGE_IDLE", "unit": "Percent"},
+            {"name": "cpu_usage_nice", "unit": "Percent"},
+            "cpu_usage_guest"
+          ],
+          "totalcpu": false,
+          "metrics_collection_interval": 10,
+          "append_dimensions": {
+            "test": "test1",
+            "date": "2017-10-01"
+          }
+        },
+        "disk": {
+          "resources": [
+            "*"
+          ],
+          "measurement": [
+            {"name": "free", "rename": "DISK_FREE", "unit": "Gigabytes"},
+            "total",
+            "used",
+            "used_percent"
+          ],
+          "ignore_file_system_types": [
+            "sysfs", "devtmpfs"
+          ],
+          "drop_device": true
+        },
+        "diskio": {
+          "resources": [
+            "*"
+          ],
+          "measurement": [
+            "reads",
+            "writes",
+            "read_bytes",
+            "write_bytes",
+            "read_time",
+            "write_time",
+            "io_time",
+            "iops_in_progress"
+          ],
+          "metrics_collection_interval": 60
+        },
+        "net": {
+          "resources": [
+            "*"
+          ],
+          "measurement": [
+            "bytes_sent",
+            "bytes_recv"
+          ],
+          "metrics_collection_interval": 60
+        },
+        "netstat": {
+          "measurement": [
+            "tcp_established",
+            "tcp_syn_sent",
+            "tcp_close"
+          ],
+          "metrics_collection_interval": 60
+        },
+        "processes": {
+          "measurement": [
+            "running",
+            "sleeping",
+            "dead"
+          ],
+          "metrics_collection_interval": 60
+        }
+      },
+      "append_dimensions": {
+        "ImageId": "${aws:ImageId}",
+        "InstanceId": "${aws:InstanceId}",
+        "InstanceType": "${aws:InstanceType}",
+        "AutoScalingGroupName": "${aws:AutoScalingGroupName}"
+      },
+      "aggregation_dimensions" : [["AutoScalingGroupName"], ["InstanceId", "InstanceType"],[]]
+    },
+    "logs": {
+     "logs_collected": {
+       "files": {
+         "collect_list": [
+           {
+             "file_path": "/emr/instance-controller/lib/info/job-flow-state.txt",
+             "log_group_name": "/aws/emr/nova/bgcloud/emr-instance",
+             "log_stream_name": "/controller/JobFlowState/{instance_id}",
+             "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
+             "timezone": "Local"
+            },
+           {
+             "file_path": "/emr/instance-controller/lib/info/job-flow.json",
+             "log_group_name": "/aws/emr/nova/bgcloud/emr-instance",
+             "log_stream_name": "/controller/JobFlow/{instance_id}",
+             "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
+             "timezone": "Local"
+            },
+           {
+             "file_path": "/mnt/var/log/bootstrap-actions/master.log",
+             "log_group_name": "/aws/emr/nova/bgcloud/bootstrap",
+             "log_stream_name": "/actions/{instance_id}",
+             "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
+             "timezone": "Local"
+            },
+            {
+              "file_path": "/mnt/var/log/bootstrap-actions/**/controller",
+              "log_group_name": "/aws/emr/nova/bgcloud/bootstrap",
+              "log_stream_name": "/step/controller/{instance_id}",
+              "timezone": "Local"
+            },
+            {
+              "file_path": "/mnt/var/log/bootstrap-actions/**/stderr",
+              "log_group_name": "/aws/emr/nova/bgcloud/bootstrap",
+              "log_stream_name": "/step/stderr/{instance_id}",
+              "timezone": "Local"
+            },
+            {
+              "file_path": "/mnt/var/log/bootstrap-actions/**/stdout",
+              "log_group_name": "/aws/emr/nova/bgcloud/bootstrap",
+              "log_stream_name": "/step/stdout/{instance_id}",
+              "timezone": "Local"
+            },
+            {
+              "file_path": "/mnt/var/log/hadoop/steps/**/controller",
+              "log_group_name": "/aws/emr/nova/bgcloud/hadoop",
+              "log_stream_name": "/controller/{instance_id}",
+              "timezone": "Local"
+           },
+           {
+             "file_path": "/mnt/var/log/hadoop/steps/**/stderr",
+             "log_group_name": "/aws/emr/nova/bgcloud/hadoop",
+             "log_stream_name": "/stderr/{instance_id}",
+             "timezone": "Local"
+           },
+           {
+             "file_path": "/mnt/var/log/hadoop/steps/**/stdout",
+             "log_group_name": "/aws/emr/nova/bgcloud/hadoop",
+             "log_stream_name": "/stdout/{instance_id}",
+             "timezone": "Local"
+            },
+            {
+              "file_path": "/mnt/var/log/instance-state/**.log",
+              "log_group_name": "/aws/emr/nova/bgcloud/instance",
+              "log_stream_name": "/state/{instance_id}",
+              "timezone": "Local"
+            },
+            {
+              "file_path": "/emr/instance-controller/log/instance-controller.log",
+              "log_group_name": "/aws/emr/nova/bgcloud/instance",
+              "log_stream_name": "/controller/{instance_id}",
+              "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
+              "timezone": "Local"
+            },
+            {
+              "file_path": "/mnt/var/log/hadoop-yarn/containers/**/**/stdout",
+              "log_group_name": "/aws/emr/nova/bgcloud/container",
+              "log_stream_name": "/application-stdout/{instance_id}",
+              "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
+              "timezone": "Local"
+            },
+            {
+              "file_path": "/mnt/var/log/hadoop-yarn/containers/**/**/stderr",
+              "log_group_name": "/aws/emr/nova/bgcloud/container",
+              "log_stream_name": "/application-stderr/{instance_id}",
+              "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
+              "timezone": "Local"
+            }
+         ]
+       }
+     },
+     "log_stream_name": "NOVABGCloudSuperFeedLogStream/{instance_id}",
+     "force_flush_interval" : 15
+    }
+  }

@@ -5,10 +5,10 @@
      "debug": false
     },
     "metrics": {
-      "namespace": "Dev/SuperFeedMetrics",
+      "namespace": "Dev/Metrics",
       "metrics_collected": {
         "collectd": {
-          "name_prefix":"SuperFeed_collectd_metrics",
+          "name_prefix":"collectd_metrics",
           "metrics_aggregation_interval":120
         },
         "cpu": {
@@ -99,84 +99,84 @@
          "collect_list": [
            {
              "file_path": "/emr/instance-controller/lib/info/job-flow-state.txt",
-             "log_group_name": "/aws/emr/nova/bgcloud/emr-instance",
+             "log_group_name": "/aws/emr/emr-instance",
              "log_stream_name": "/controller/JobFlowState/{instance_id}",
              "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
              "timezone": "Local"
             },
            {
              "file_path": "/emr/instance-controller/lib/info/job-flow.json",
-             "log_group_name": "/aws/emr/nova/bgcloud/emr-instance",
+             "log_group_name": "/aws/emr/emr-instance",
              "log_stream_name": "/controller/JobFlow/{instance_id}",
              "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
              "timezone": "Local"
             },
            {
              "file_path": "/mnt/var/log/bootstrap-actions/master.log",
-             "log_group_name": "/aws/emr/nova/bgcloud/bootstrap",
+             "log_group_name": "/aws/emr/bootstrap",
              "log_stream_name": "/actions/{instance_id}",
              "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
              "timezone": "Local"
             },
             {
               "file_path": "/mnt/var/log/bootstrap-actions/**/controller",
-              "log_group_name": "/aws/emr/nova/bgcloud/bootstrap",
+              "log_group_name": "/aws/emr/bootstrap",
               "log_stream_name": "/step/controller/{instance_id}",
               "timezone": "Local"
             },
             {
               "file_path": "/mnt/var/log/bootstrap-actions/**/stderr",
-              "log_group_name": "/aws/emr/nova/bgcloud/bootstrap",
+              "log_group_name": "/aws/emr/bootstrap",
               "log_stream_name": "/step/stderr/{instance_id}",
               "timezone": "Local"
             },
             {
               "file_path": "/mnt/var/log/bootstrap-actions/**/stdout",
-              "log_group_name": "/aws/emr/nova/bgcloud/bootstrap",
+              "log_group_name": "/aws/emr/bootstrap",
               "log_stream_name": "/step/stdout/{instance_id}",
               "timezone": "Local"
             },
             {
               "file_path": "/mnt/var/log/hadoop/steps/**/controller",
-              "log_group_name": "/aws/emr/nova/bgcloud/hadoop",
+              "log_group_name": "/aws/emr/hadoop",
               "log_stream_name": "/controller/{instance_id}",
               "timezone": "Local"
            },
            {
              "file_path": "/mnt/var/log/hadoop/steps/**/stderr",
-             "log_group_name": "/aws/emr/nova/bgcloud/hadoop",
+             "log_group_name": "/aws/emr/hadoop",
              "log_stream_name": "/stderr/{instance_id}",
              "timezone": "Local"
            },
            {
              "file_path": "/mnt/var/log/hadoop/steps/**/stdout",
-             "log_group_name": "/aws/emr/nova/bgcloud/hadoop",
+             "log_group_name": "/aws/emr/hadoop",
              "log_stream_name": "/stdout/{instance_id}",
              "timezone": "Local"
             },
             {
               "file_path": "/mnt/var/log/instance-state/**.log",
-              "log_group_name": "/aws/emr/nova/bgcloud/instance",
+              "log_group_name": "/aws/emr/instance",
               "log_stream_name": "/state/{instance_id}",
               "timezone": "Local"
             },
             {
               "file_path": "/emr/instance-controller/log/instance-controller.log",
-              "log_group_name": "/aws/emr/nova/bgcloud/instance",
+              "log_group_name": "/aws/emr/instance",
               "log_stream_name": "/controller/{instance_id}",
               "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
               "timezone": "Local"
             },
             {
               "file_path": "/mnt/var/log/hadoop-yarn/containers/**/**/stdout",
-              "log_group_name": "/aws/emr/nova/bgcloud/container",
+              "log_group_name": "/aws/emr/container",
               "log_stream_name": "/application-stdout/{instance_id}",
               "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
               "timezone": "Local"
             },
             {
               "file_path": "/mnt/var/log/hadoop-yarn/containers/**/**/stderr",
-              "log_group_name": "/aws/emr/nova/bgcloud/container",
+              "log_group_name": "/aws/emr/container",
               "log_stream_name": "/application-stderr/{instance_id}",
               "timestamp_format": "%Y-%m-%d %H:%M:%S,%f",
               "timezone": "Local"
@@ -184,7 +184,7 @@
          ]
        }
      },
-     "log_stream_name": "NOVABGCloudSuperFeedLogStream/{instance_id}",
+     "log_stream_name": "EMRLogStream/{instance_id}",
      "force_flush_interval" : 15
     }
   }
